@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.colors.azulEscuro,
         zIndex: 1,
         position: "absolute",
-        top: "90%",
+        top: "95%",
         marginHorizontal: "15%",
         width: "70%",
         height: "5%",
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     texto: {
         color: Colors.colors.offWhite,
         fontSize: 20,
-        fontFamily: 'Inter_700Bold',
         textAlign: 'center',
     },
     icone: {
