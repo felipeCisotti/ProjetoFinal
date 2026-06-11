@@ -24,7 +24,6 @@ export default function OnBoarding3({ navigation }) {
     }
 
     try {
-      // salva em formato JSON
       const usuario = {
         nome: nome,
       };
@@ -33,10 +32,7 @@ export default function OnBoarding3({ navigation }) {
         '@usuario',
         JSON.stringify(usuario)
       );
-
-      Alert.alert('Sucesso', 'Nome salvo com sucesso!');
-
-      // navigation.navigate('Home');
+      navigation.navigate('TelaInicial');
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +42,7 @@ export default function OnBoarding3({ navigation }) {
     <View style={styles.container}>
 
       {/* TOPO */}
-      <View style={styles.topArea}>
+      <View style={styles.topBar}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <AntDesign
                         name="arrow-left"
@@ -54,7 +50,7 @@ export default function OnBoarding3({ navigation }) {
                         color={Colors.colors.azulEscuro}
                     />
                 </TouchableOpacity>
-                <Text style={styles.introduction}>Introdução</Text>
+                <Text style={styles.stepText}>Introdução</Text>
             </View>
 
       {/* TITULO */}
@@ -80,11 +76,11 @@ export default function OnBoarding3({ navigation }) {
       {/* INPUT */}
       <View style={styles.inputArea}>
         <Text style={styles.label}>
-          YOUR FIRST NAME
+          INFORME SEU NOME
         </Text>
 
         <TextInput
-          placeholder="e.g. Julian"
+          placeholder="Ex: Felipe"
           placeholderTextColor="#B8B8B8"
           style={styles.input}
           value={nome}
@@ -92,7 +88,7 @@ export default function OnBoarding3({ navigation }) {
         />
 
         <Text style={styles.helperText}>
-          We use this to personalize your reading lists.
+          Nós usamos isso para personalizar sua experiência.
         </Text>
       </View>
 
@@ -102,7 +98,7 @@ export default function OnBoarding3({ navigation }) {
         onPress={salvarNome}
       >
         <Text style={styles.buttonText}>
-          Start Exploring
+          COMECE A EXPLORAR
         </Text>
       </TouchableOpacity>
 
@@ -118,22 +114,20 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
 
-  topArea: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  back: {
-    fontSize: 24,
-    color: '#415470',
-  },
-
-  introduction: {
-    fontSize: 11,
-    letterSpacing: 2,
-    color: '#415470',
-  },
+  topBar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingTop: 10,
+        paddingBottom: 5,
+    },
+    stepText: {
+        fontSize: 11,
+        color: Colors.colors.azulMedio,
+        fontWeight: "600",
+        letterSpacing: 1.5,
+    },
 
   titleArea: {
     marginTop: 40,
@@ -194,7 +188,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 58,
-    backgroundColor: '#2C2C2C',
+    backgroundColor: Colors.colors.azulEscuro,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -205,7 +199,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: '#FFFFFF',
+    color: Colors.colors.offWhite,
     fontSize: 18,
     fontWeight: '600',
   },

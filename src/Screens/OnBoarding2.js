@@ -55,7 +55,7 @@ export default function OnBoarding2({ navigation }) {
             <View style={styles.bottomContainer}>
                 <TouchableOpacity
                     style={styles.enableButton}
-                    onPress={() => navigation.navigate("HomeScreen")}
+                    onPress={() => navigation.navigate("OnBoarding3")}
                     activeOpacity={0.8}
                 >
                     <Feather
@@ -68,7 +68,7 @@ export default function OnBoarding2({ navigation }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("HomeScreen")}
+                    onPress={() => navigation.navigate("OnBoarding3")}
                     activeOpacity={0.6}
                 >
                     <Text style={styles.notNowText}>Agora Não</Text>

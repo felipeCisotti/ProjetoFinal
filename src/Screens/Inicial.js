@@ -4,15 +4,40 @@ import {
     Image,
     StyleSheet,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "../Colors.json";
 
 export default function Inicial({ navigation }) {
     useEffect(() => {
-        const timer = setTimeout(() => {
-            navigation.replace("OnBoarding");
-        }, 3000);
+        let active = true;
 
-        return () => clearTimeout(timer);
+        async function checarOnboarding() {
+            try {
+                const usuario = await AsyncStorage.getItem("@usuario");
+                
+                if (active) {
+                    if (usuario !== null) {
+                        navigation.replace("TelaInicial");
+                    } else {
+                        navigation.replace("OnBoarding");
+                    }
+                }
+            } catch (error) {
+                console.log("Erro ao checar onboarding:", error);
+                if (active) {
+                    navigation.replace("OnBoarding");
+                }
+            }
+        }
+
+        const timer = setTimeout(() => {
+            checarOnboarding();
+        }, 2000); // 2 segundos de exibição do logo para uma transição mais fluida e premium
+
+        return () => {
+            active = false;
+            clearTimeout(timer);
+        };
     }, [navigation]);
 
     return (
@@ -34,3 +59,4 @@ const styles = StyleSheet.create({
         height: 200,
     },
 });
+
