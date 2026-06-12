@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,11 +8,13 @@ import { EvilIcons } from "@expo/vector-icons";
 import CardIndicações from "../Components/CardIndicacoes";
 import CardLivros from "../Components/CardLivros";
 import LivrosData from "../LivrosCard.js";
+import { useNavigation } from "@react-navigation/native";
 
 const TelaInicial = () => {
     const [nome, setNome] = useState("");
     const isFocused = useIsFocused();
     const [pesquisa, setPesquisa] = useState("");
+    const navigation = useNavigation();
 
     useEffect(() => {
         async function carregarUsuario() {
@@ -67,9 +69,9 @@ const TelaInicial = () => {
 
     const obterSaudacao = () => {
         const hora = new Date().getHours();
-        if (hora >= 5 && hora < 12) {
+        if (hora >= 5 && hora <= 12) {
             return "Bom dia";
-        } else if (hora >= 12 && hora < 18) {
+        } else if (hora >= 12 && hora <= 18) {
             return "Boa tarde";
         } else {
             return "Boa noite";
@@ -104,14 +106,21 @@ const TelaInicial = () => {
                 <View style={styles.Secao2}>
                     <View style={styles.TituloSecao}>
                         <Text style={styles.SecaoTitle}>Para suas manhãs</Text>
-                        <Text style={styles.SecaoTitleItalic}>Ver Todos </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("TodosOsLivros")}>
+                            <Text style={styles.SecaoTitleItalic}>Ver Todos </Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.Separacao}></View>
 
                     <View style={styles.containerLivros}>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                            <CardLivros />
-                        </ScrollView>
+                        <FlatList
+                            data={LivrosData}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 10 }}
+                            renderItem={({ item }) => <CardLivros item={item} />}
+                            keyExtractor={(item) => item.id.toString()}
+                        />
                     </View>
                 </View>
 
