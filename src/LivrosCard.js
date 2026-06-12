@@ -1,8 +1,8 @@
-import Conselhos from "../assets/Cards/Conselhos.png";
-import DomCasmurro from "../assets/Cards/DomCasmurro.png";
-import CorposSecos from "../assets/Cards/CorposSecos.png";
-import Clara from "../assets/Cards/Clara.png";
-import Capitaes from "../assets/Cards/Capitaes.png";
+import Conselhos from "../assets/Cards/Conselhos.jpg";
+import DomCasmurro from "../assets/Cards/DomCasmurro.jpg";
+import CorposSecos from "../assets/Cards/CorposSecos.jpg";
+import Clara from "../assets/Cards/Clara.jpg";
+import Capitaes from "../assets/Cards/Capitaes.jpg";
 
 const LivrosData = [
   {

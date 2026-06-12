@@ -7,6 +7,7 @@ import Colors from "../Colors.json";
 import { EvilIcons } from "@expo/vector-icons";
 import CardIndicações from "../Components/CardIndicacoes";
 import CardLivros from "../Components/CardLivros";
+import LivrosData from "../LivrosCard.js";
 
 const TelaInicial = () => {
     const [nome, setNome] = useState("");
@@ -109,22 +110,14 @@ const TelaInicial = () => {
 
                     <View style={styles.containerLivros}>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                            <CardLivros
-                                key={livro.id}
-                                id={livro.id}
-                                titulo={livro.Titulo}
-                                autor={livro.Autor}
-                                capa={livro.Imagem}
-                                navigar={navigarParaDetalhesLivro}
-                            />
+                            <CardLivros />
                         </ScrollView>
-                        
                     </View>
                 </View>
 
-                
 
-               
+
+
 
             </ScrollView>
         </SafeAreaView>
@@ -162,26 +155,26 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
     },
     inputBook: {
-    backgroundColor: "#fff",
-    marginHorizontal: 24,
-    height: 54,
-    borderRadius: 27,
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#E5E5E5",
+        backgroundColor: "#fff",
+        marginHorizontal: 24,
+        height: 54,
+        borderRadius: 27,
+        flexDirection: "row",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
 
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 4,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+
+        marginBottom: 28,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-
-    marginBottom: 28,
-},
     searchInput: {
         flex: 1,
         paddingVertical: 10,
@@ -202,7 +195,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 24,
         padding: 12,
     },
-    TituloSecao:{
+    TituloSecao: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
@@ -223,13 +216,17 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         textDecorationLine: "underline",
     },
-    Separacao:{
+    Separacao: {
         borderBottomWidth: 0.5,
         borderBottomColor: Colors.colors.azulEscuro,
         width: '110%',
         alignSelf: 'center',
         marginHorizontal: 24,
-    }
+    },
+    containerLivros: {
+        marginVertical: 10,
+        marginHorizontal: -24,
+    },
 });
 
 export default TelaInicial;
