@@ -8,10 +8,12 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LivrosData from "../LivrosData.js";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function CardIndicações({ Titulo: propTitulo, Autor: propAutor, Imagem: propImagem, Descricao: propDescricao, onPress }) {
     const [livro, setLivro] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         if (propTitulo || propAutor || propImagem || propDescricao) {
@@ -69,7 +71,13 @@ export default function CardIndicações({ Titulo: propTitulo, Autor: propAutor,
     }
 
     return (
-        <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={styles.cardContainer}>
+<TouchableOpacity
+    activeOpacity={0.9}
+    onPress={() =>
+        navigation.navigate("ResenhaLiteraria", { item: livro })
+    }
+    style={styles.cardContainer}
+>
             <ImageBackground
                 key={Imagem}
                 source={Imagem}

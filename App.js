@@ -9,25 +9,32 @@ import OnBoarding2 from './src/Screens/OnBoarding2';
 import OnBoarding3 from './src/Screens/OnBoarding3';
 import TelaInicial from './src/Screens/TelaInicial';
 import TodosOsLivros from './src/Screens/TodosLivros';
+import ResenhaLiteraria from './src/Screens/ResenhaLiteraria';
+import TelaPerfil from './src/Screens/TelaPerfil';
+import { FavoritosProvider } from './src/FavoritosContext';
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StatusBar style="light" />
-      <Stack.Navigator
-        initialRouteName="Inicial"
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Inicial" component={Inicial} />
-        <Stack.Screen name="OnBoarding" component={OnBoarding} />
-        <Stack.Screen name="OnBoarding2" component={OnBoarding2} />
-        <Stack.Screen name="OnBoarding3" component={OnBoarding3} />
-        <Stack.Screen name="TelaInicial" component={TelaInicial} />
-        <Stack.Screen name="TodosOsLivros" component={TodosOsLivros} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FavoritosProvider>
+      <NavigationContainer>
+        <StatusBar style="light" />
+        <Stack.Navigator
+          initialRouteName="Inicial"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Inicial" component={Inicial} />
+          <Stack.Screen name="OnBoarding" component={OnBoarding} />
+          <Stack.Screen name="OnBoarding2" component={OnBoarding2} />
+          <Stack.Screen name="OnBoarding3" component={OnBoarding3} />
+          <Stack.Screen name="TelaInicial" component={TelaInicial} />
+          <Stack.Screen name="TodosOsLivros" component={TodosOsLivros} />
+          <Stack.Screen name="ResenhaLiteraria" component={ResenhaLiteraria} />
+          <Stack.Screen name="TelaPerfil" component={TelaPerfil} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoritosProvider>
   );
 }

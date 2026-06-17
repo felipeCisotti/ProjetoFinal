@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "../Colors.json";
-import { EvilIcons } from "@expo/vector-icons";
+import { EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import CardIndicações from "../Components/CardIndicacoes";
 import CardLivros from "../Components/CardLivros";
 import LivrosData from "../LivrosCard.js";
@@ -82,10 +82,19 @@ const TelaInicial = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
                 <View style={styles.header}>
-                    <Text style={styles.dateText}>{obterDataFormatada()}</Text>
-                    <Text style={styles.saudacao}>
-                        {obterSaudacao()}, <Text style={styles.nome}>{nome}</Text>
-                    </Text>
+                    <View style={styles.headerTexto}>
+                        <Text style={styles.dateText}>{obterDataFormatada()}</Text>
+                        <Text style={styles.saudacao}>
+                            {obterSaudacao()}, <Text style={styles.nome}>{nome}</Text>
+                        </Text>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("TelaPerfil")}
+                        style={styles.perfilIcone}
+                        activeOpacity={0.7}
+                    >
+                        <MaterialIcons name="account-circle" size={42} color={Colors.colors.azulMedio} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.inputBook}>
@@ -113,13 +122,24 @@ const TelaInicial = () => {
                     <View style={styles.Separacao}></View>
 
                     <View style={styles.containerLivros}>
+                       
                         <FlatList
                             data={LivrosData}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 10 }}
-                            renderItem={({ item }) => <CardLivros item={item} />}
-                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={styles.itemContainer}
+                            activeOpacity={0.85}
+                            onPress={() =>
+                                navigation.navigate("ResenhaLiteraria", { item })
+                            }
+                        >
+                            <CardLivros item={item} />
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
                         />
                     </View>
                 </View>
@@ -142,9 +162,18 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
     },
     header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
         paddingHorizontal: 24,
         paddingTop: 20,
         marginBottom: 24,
+    },
+    headerTexto: {
+        flex: 1,
+    },
+    perfilIcone: {
+        marginLeft: 12,
     },
     dateText: {
         fontSize: 12,

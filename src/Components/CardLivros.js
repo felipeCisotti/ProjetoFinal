@@ -1,16 +1,31 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../Colors.json";
-import {EvilIcons} from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import { useFavoritos } from "../FavoritosContext";
 
 const CardLivros = ({ item, isGrid }) => {
+    const { isFavorito, toggleFavorito } = useFavoritos();
+    const favoritado = isFavorito(item.id);
+
     return (
         <View style={[styles.card, isGrid && styles.cardGrid]}>
             <Image source={item.Imagem} style={[styles.imagem, isGrid && styles.imagemGrid]} resizeMode="cover" />
             <Text style={[styles.titulo, isGrid && styles.tituloGrid]} numberOfLines={2}>{item.Titulo}</Text>
             <Text style={[styles.autor, isGrid && styles.autorGrid]} numberOfLines={1}>{item.Autor}</Text>
             <View style={styles.avaliacao}>
-                <EvilIcons name="star" style={styles.starIcon} size={20} color={Colors.colors.azulEscuro} />
+                <TouchableOpacity
+                    onPress={() => toggleFavorito(item)}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    activeOpacity={0.7}
+                >
+                    <EvilIcons
+                        name="star"
+                        style={styles.starIcon}
+                        size={32}
+                        color={favoritado ? "#F4A935" : Colors.colors.azulEscuro}
+                    />
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -73,7 +88,7 @@ const styles = StyleSheet.create({
     },
     starIcon: {
         marginRight: 4,
-        fontSize: 32
+        fontSize: 32,
     },
 });
 

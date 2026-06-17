@@ -23,11 +23,19 @@ const TelaTodosOsLivros = () => {
             <View style={styles.containerLivros}>
                 <FlatList
                     data={LivrosData}
-                    numColumns={2}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ paddingBottom: 20 }}
-                    columnWrapperStyle={styles.columns}
-                    renderItem={({ item }) => <CardLivros item={item} isGrid={true} />}
+                    contentContainerStyle={styles.listaConteudo}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={styles.itemContainer}
+                            activeOpacity={0.85}
+                            onPress={() =>
+                                navigation.navigate("ResenhaLiteraria", { item })
+                            }
+                        >
+                            <CardLivros item={item} />
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={(item) => item.id.toString()}
                 />
             </View>
@@ -59,16 +67,15 @@ const styles = StyleSheet.create({
     },
     containerLivros: {
         flex: 1,
-        width: 500,
-        height: 900,
+        width: "100%",
     },
-    columns: {
-
-        flexDirection: "column",
-        justifyContent: "center",
-        marginBottom: 16,
+    listaConteudo: {
+        paddingBottom: 30,
         alignItems: "center",
-        
+    },
+    itemContainer: {
+        marginBottom: 20,
+        alignItems: "center",
     },
 });
 
