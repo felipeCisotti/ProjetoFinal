@@ -167,10 +167,23 @@ const TelaInicial = () => {
                     </View>
                 </View>
 
-
-
-
-
+                {/* Banner Pomodoro */}
+                <View style={styles.pomodoroContainer}>
+                    <View style={styles.pomodoroTextContainer}>
+                        <Text style={styles.pomodoroTitle}>Foco na Leitura</Text>
+                        <Text style={styles.pomodoroSubtitle}>
+                            Experimente nosso Timer Pomodoro para melhorar sua concentração e ler mais.
+                        </Text>
+                    </View>
+                    <TouchableOpacity 
+                        style={styles.pomodoroButton} 
+                        activeOpacity={0.8}
+                        onPress={() => navigation.navigate("PomodoroTimer")}
+                    >
+                        <MaterialIcons name="timer" size={22} color={Colors.colors.offWhite} />
+                        <Text style={styles.pomodoroButtonText}>Iniciar Pomodoro</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -254,10 +267,9 @@ const styles = StyleSheet.create({
     Secao2: {
         marginTop: 10,
         marginHorizontal: 24,
-        padding: 12,
+        paddingVertical: 12,
     },
     TituloSecao: {
-        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -280,13 +292,59 @@ const styles = StyleSheet.create({
     Separacao: {
         borderBottomWidth: 0.5,
         borderBottomColor: Colors.colors.azulEscuro,
-        width: '110%',
-        alignSelf: 'center',
-        marginHorizontal: 24,
     },
     containerLivros: {
         marginVertical: 10,
         marginHorizontal: -24,
+    },
+    pomodoroContainer: {
+        backgroundColor: "#EBF1F6", // tom de azul clarinho
+        marginHorizontal: 24,
+        marginTop: 10,
+        marginBottom: 20,
+        borderRadius: 16,
+        padding: 24,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: "#D9E4EC",
+    },
+    pomodoroTextContainer: {
+        marginBottom: 16,
+        alignItems: "center",
+    },
+    pomodoroTitle: {
+        fontSize: 22,
+        fontWeight: "bold",
+        color: Colors.colors.azulEscuro,
+        fontFamily: "serif",
+        marginBottom: 6,
+    },
+    pomodoroSubtitle: {
+        fontSize: 14,
+        color: Colors.colors.azulMedio,
+        textAlign: "center",
+        lineHeight: 20,
+        paddingHorizontal: 10,
+    },
+    pomodoroButton: {
+        backgroundColor: Colors.colors.azulEscuro,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 14,
+        paddingHorizontal: 24,
+        borderRadius: 30,
+        gap: 8,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+        elevation: 6,
+    },
+    pomodoroButtonText: {
+        color: Colors.colors.offWhite,
+        fontSize: 16,
+        fontWeight: "600",
     },
 });
 

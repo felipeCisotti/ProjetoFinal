@@ -10,6 +10,7 @@ import TelaInicial from './src/Screens/TelaInicial';
 import TodosOsLivros from './src/Screens/TodosLivros';
 import ResenhaLiteraria from './src/Screens/ResenhaLiteraria';
 import TelaPerfil from './src/Screens/TelaPerfil';
+import PomodoroTimer from './src/Screens/PomodoroTimer';
 import { FavoritosProvider } from './src/FavoritosContext';
 
 
@@ -31,6 +32,7 @@ export default function App() {
           <Stack.Screen name="TodosOsLivros" component={TodosOsLivros} />
           <Stack.Screen name="ResenhaLiteraria" component={ResenhaLiteraria} />
           <Stack.Screen name="TelaPerfil" component={TelaPerfil} />
+          <Stack.Screen name="PomodoroTimer" component={PomodoroTimer} />
         </Stack.Navigator>
       </NavigationContainer>
     </FavoritosProvider>

@@ -90,7 +90,7 @@ export default function CardIndicações({ Titulo: propTitulo, Autor: propAutor,
                 <View style={styles.overlay} />
 
                 <View style={styles.badge}>
-                    <Text style={styles.badgeText}>DAILY CURATED</Text>
+                    <Text style={styles.badgeText}>Recomendação Diária</Text>
                 </View>
 
                 <View style={styles.contentArea}>

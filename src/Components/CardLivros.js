@@ -25,6 +25,7 @@ const CardLivros = ({ item, isGrid }) => {
                     UTI: 'public.jpeg',
                 });
             } else {
+                // Caso não suporte (ex: Web), volta ao compartilhamento só de texto
                 await Share.share({
                     message: mensagem,
                     title: `Compartilhar ${item.Titulo}`,
