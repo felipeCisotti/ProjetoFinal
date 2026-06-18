@@ -22,6 +22,7 @@ const TelaPerfil = () => {
     const navigation = useNavigation();
     const [nome, setNome] = useState("");
     const [fotoPerfil, setFotoPerfil] = useState(null);
+    const [lidos, setLidos] = useState([]);
     const { favoritos } = useFavoritos();
 
     useEffect(() => {
@@ -33,12 +34,31 @@ const TelaPerfil = () => {
                     setNome(obj.nome || "");
                     setFotoPerfil(obj.foto || null);
                 }
+                const jsonLidos = await AsyncStorage.getItem("@livros_lidos");
+                if (jsonLidos) {
+                    setLidos(JSON.parse(jsonLidos));
+                }
             } catch (e) {
                 console.log("Erro ao carregar usuário:", e);
             }
         }
         carregar();
     }, []);
+
+    const toggleLido = async (id) => {
+        try {
+            let novosLidos;
+            if (lidos.includes(id)) {
+                novosLidos = lidos.filter((l) => l !== id);
+            } else {
+                novosLidos = [...lidos, id];
+            }
+            setLidos(novosLidos);
+            await AsyncStorage.setItem("@livros_lidos", JSON.stringify(novosLidos));
+        } catch (e) {
+            console.log("Erro ao salvar lido:", e);
+        }
+    };
 
     const escolherFoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -141,14 +161,31 @@ const TelaPerfil = () => {
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={{ paddingVertical: 12, paddingHorizontal: 4 }}
                             keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    activeOpacity={0.85}
-                                    onPress={() => navigation.navigate("ResenhaLiteraria", { item })}
-                                >
-                                    <CardLivros item={item} />
-                                </TouchableOpacity>
-                            )}
+                            renderItem={({ item }) => {
+                                const isLido = lidos.includes(item.id);
+                                return (
+                                    <View style={{ position: "relative" }}>
+                                        <TouchableOpacity
+                                            activeOpacity={0.85}
+                                            onPress={() => navigation.navigate("ResenhaLiteraria", { item })}
+                                        >
+                                            <CardLivros item={item} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={styles.btnLido}
+                                            onPress={() => toggleLido(item.id)}
+                                            activeOpacity={0.4}
+
+                                        >
+                                            <Feather
+                                                name={isLido ? "eye-off" : "eye"}
+                                                size={26}
+                                                color={isLido ? Colors.colors.azulClaro : Colors.colors.azulEscuro}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                );
+                            }}
                             scrollEnabled={favoritos.length > 1}
                         />
                     )}
@@ -284,6 +321,21 @@ const styles = StyleSheet.create({
         color: Colors.colors.azulMedio,
         textAlign: "center",
         lineHeight: 22,
+    },
+
+    /* Botão Lido */
+    btnLido: {
+        position: "absolute",
+        top: 12,
+        right: 36,
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderRadius: 20,
+        padding: 8,
+        elevation: 4,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
     },
 
     /* Botão Sair */

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from "react-native-safe-area-context";
 import Colors from "../Colors.json";
 
 export default function OnBoarding3({ navigation }) {
@@ -39,7 +40,7 @@ export default function OnBoarding3({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
       {/* TOPO */}
       <View style={styles.topBar}>
@@ -93,114 +94,107 @@ export default function OnBoarding3({ navigation }) {
       </View>
 
       {/* BOTÃO */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={salvarNome}
-      >
-        <Text style={styles.buttonText}>
-          COMECE A EXPLORAR
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={salvarNome}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>
+              Continuar
+            </Text>
+          </TouchableOpacity>
+      </View>
 
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FDFFED',
-    paddingHorizontal: 20,
-    paddingTop: 60,
+    backgroundColor: Colors.colors.offWhite,
   },
-
   topBar: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        paddingTop: 10,
-        paddingBottom: 5,
-    },
-    stepText: {
-        fontSize: 11,
-        color: Colors.colors.azulMedio,
-        fontWeight: "600",
-        letterSpacing: 1.5,
-    },
-
-  titleArea: {
-    marginTop: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 5,
   },
-
+  stepText: {
+    fontSize: 11,
+    color: Colors.colors.azulMedio,
+    fontWeight: "600",
+    letterSpacing: 1.5,
+  },
+  titleArea: {
+    paddingHorizontal: 20,
+    marginTop: 30,
+  },
   title: {
-    fontSize: 45,
-    color: '#222',
+    fontSize: 38,
+    color: Colors.colors.azulEscuro,
     fontFamily: 'serif',
   },
-
   subtitle: {
-    fontSize: 48,
-    color: '#B0BBD6',
+    fontSize: 38,
+    color: Colors.colors.azulMedio,
     fontStyle: 'italic',
     fontFamily: 'serif',
     marginTop: -5,
   },
-
   image: {
-    width: 180,
-    height: 180,
+    width: 160,
+    height: 160,
     alignSelf: 'center',
     marginTop: 40,
   },
-
   inputArea: {
+    paddingHorizontal: 20,
     marginTop: 40,
   },
-
   label: {
     fontSize: 11,
-    letterSpacing: 2,
-    color: '#415470',
+    letterSpacing: 1.5,
+    color: Colors.colors.azulEscuro,
     marginBottom: 10,
-    fontWeight: '600',
+    fontWeight: '700',
   },
-
   input: {
     width: '100%',
-    height: 58,
+    height: 56,
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 14,
     paddingHorizontal: 18,
-    fontSize: 18,
-    color: '#415470',
-    borderWidth: 1,
-    borderColor: '#E5E5E5',
+    fontSize: 16,
+    color: Colors.colors.azulEscuro,
+    borderWidth: 1.5,
+    borderColor: '#E8E8E8',
   },
-
   helperText: {
-    marginTop: 12,
-    color: '#8B8B8B',
+    marginTop: 8,
+    color: Colors.colors.azulMedio,
     fontSize: 13,
     fontStyle: 'italic',
   },
-
-  button: {
-    width: '100%',
-    height: 58,
-    backgroundColor: Colors.colors.azulEscuro,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+  buttonContainer: {
     position: 'absolute',
-    bottom: 40,
-    alignSelf: 'center',
-    marginHorizontal: 20,
+    bottom: 20,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 30,
   },
-
+  button: {
+    backgroundColor: Colors.colors.azulEscuro,
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: "center",
+  },
   buttonText: {
     color: Colors.colors.offWhite,
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: "600",
   },
 });

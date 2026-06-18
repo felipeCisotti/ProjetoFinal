@@ -50,8 +50,8 @@ const EstrelasInterativas = ({ nota, onChange, tamanho = 36 }) => (
     </View>
 );
 
-/* ─── Card de avaliação ─── */
-const CardAvaliacao = ({ avaliacao }) => (
+
+const CardAvaliacao = ({ avaliacao, currentUser, onDelete }) => (
     <View style={styles.cardAvaliacao}>
         <View style={styles.avaliacaoHeader}>
             <View style={styles.avatarCircle}>
@@ -62,6 +62,11 @@ const CardAvaliacao = ({ avaliacao }) => (
                 <Text style={styles.avaliacaoData}>{avaliacao.data}</Text>
             </View>
             <Estrelas nota={avaliacao.nota} tamanho={18} />
+            {avaliacao.usuario === currentUser && onDelete && (
+                <TouchableOpacity onPress={() => onDelete(avaliacao.id)} style={{ marginLeft: 12 }}>
+                    <Feather name="trash-2" size={18} color="#E74C3C" />
+                </TouchableOpacity>
+            )}
         </View>
 
         <View>
@@ -69,8 +74,7 @@ const CardAvaliacao = ({ avaliacao }) => (
         </View>
     </View>
 );
-/* ─── Tela principal ─── */
-/* ─── 2 avaliações fixas/fictícias (sempre exibidas) ─── */
+
 const AVALIACOES_FIXAS = [
     {
         id: "fixo_1",
@@ -164,7 +168,26 @@ const ResenhaLiteraria = () => {
         setNovoComentario("");
     };
 
-    /* Combina avaliações do usuário (novas primeiro) + fixas (sempre ao fim) */
+
+    const excluirAvaliacao = (id) => {
+        Alert.alert(
+            "Excluir Avaliação",
+            "Tem certeza que deseja excluir sua avaliação?",
+            [
+                { text: "Cancelar", style: "cancel" },
+                {
+                    text: "Excluir",
+                    style: "destructive",
+                    onPress: async () => {
+                        const novaLista = avaliacoes.filter((a) => a.id !== id);
+                        setAvaliacoes(novaLista);
+                        await AsyncStorage.setItem(storageKey, JSON.stringify(novaLista));
+                    },
+                },
+            ]
+        );
+    };
+
     const todasAvaliacoes = [...avaliacoes, ...AVALIACOES_FIXAS];
     const notaMedia =
         todasAvaliacoes.reduce((acc, a) => acc + a.nota, 0) / todasAvaliacoes.length;
@@ -231,7 +254,14 @@ const ResenhaLiteraria = () => {
                             </Text>
                         </View>
                     ) : (
-                        todasAvaliacoes.map((av) => <CardAvaliacao key={av.id} avaliacao={av} />)
+                        todasAvaliacoes.map((av) => (
+                            <CardAvaliacao 
+                                key={av.id} 
+                                avaliacao={av} 
+                                currentUser={nomeUsuario}
+                                onDelete={av.id.startsWith("fixo") ? null : excluirAvaliacao}
+                            />
+                        ))
                     )}
                 </View>
             </ScrollView>

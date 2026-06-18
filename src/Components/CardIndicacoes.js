@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LivrosData from "../LivrosData.js";
+import LivrosCard from "../LivrosCard.js";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -73,9 +74,10 @@ export default function CardIndicações({ Titulo: propTitulo, Autor: propAutor,
     return (
 <TouchableOpacity
     activeOpacity={0.9}
-    onPress={() =>
-        navigation.navigate("ResenhaLiteraria", { item: livro })
-    }
+    onPress={() => {
+        const itemParaResenha = LivrosCard.find(l => l.id === livro.id) || livro;
+        navigation.navigate("ResenhaLiteraria", { item: itemParaResenha });
+    }}
     style={styles.cardContainer}
 >
             <ImageBackground

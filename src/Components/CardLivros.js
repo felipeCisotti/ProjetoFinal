@@ -1,12 +1,39 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Share } from "react-native";
 import Colors from "../Colors.json";
 import { EvilIcons } from "@expo/vector-icons";
 import { useFavoritos } from "../FavoritosContext";
+import * as Sharing from "expo-sharing";
+import { Asset } from "expo-asset";
 
 const CardLivros = ({ item, isGrid }) => {
     const { isFavorito, toggleFavorito } = useFavoritos();
     const favoritado = isFavorito(item.id);
+
+    const compartilharLivro = async () => {
+        try {
+            const mensagem = `Ei, veja este livro que encontrei no EntreLinhas: ${item.Titulo}, escrito por ${item.Autor}!`;
+            
+            const isAvailable = await Sharing.isAvailableAsync();
+            
+            if (isAvailable) {
+                const [asset] = await Asset.loadAsync(item.Imagem);
+                
+                await Sharing.shareAsync(asset.localUri, {
+                    dialogTitle: mensagem,
+                    mimeType: 'image/jpeg',
+                    UTI: 'public.jpeg',
+                });
+            } else {
+                await Share.share({
+                    message: mensagem,
+                    title: `Compartilhar ${item.Titulo}`,
+                });
+            }
+        } catch (error) {
+            console.log("Erro ao compartilhar:", error.message);
+        }
+    };
 
     return (
         <View style={[styles.card, isGrid && styles.cardGrid]}>
@@ -21,10 +48,16 @@ const CardLivros = ({ item, isGrid }) => {
                 >
                     <EvilIcons
                         name="star"
-                        style={styles.starIcon}
-                        size={32}
+                        size={38}
                         color={favoritado ? "#F4A935" : Colors.colors.azulEscuro}
                     />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={compartilharLivro}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    activeOpacity={0.7}
+                >
+                    <EvilIcons name="share-apple" size={38} color={Colors.colors.azulEscuro} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -84,11 +117,10 @@ const styles = StyleSheet.create({
     avaliacao: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 8,
-    },
-    starIcon: {
-        marginRight: 4,
-        fontSize: 32,
+        justifyContent: "space-evenly",
+        width: "100%",
+        paddingHorizontal: 24,
+        marginTop: 15,
     },
 });
 

@@ -112,7 +112,7 @@ export default function OnBoarding({ navigation }) {
                         !selected && styles.continueButtonDisabled,
                     ]}
                     onPress={() => {
-                        if (selected) navigation.navigate("OnBoarding2");
+                        if (selected) navigation.navigate("OnBoarding3");
                     }}
                     activeOpacity={selected ? 0.8 : 1}
                 >

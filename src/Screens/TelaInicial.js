@@ -16,6 +16,15 @@ const TelaInicial = () => {
     const [pesquisa, setPesquisa] = useState("");
     const navigation = useNavigation();
 
+    const livrosFiltrados = LivrosData.filter((livro) => {
+        if (!pesquisa) return true;
+        const texto = pesquisa.toLowerCase();
+        return (
+            (livro.Titulo && livro.Titulo.toLowerCase().includes(texto)) ||
+            (livro.Autor && livro.Autor.toLowerCase().includes(texto))
+        );
+    });
+
     useEffect(() => {
         async function carregarUsuario() {
             try {
@@ -108,39 +117,53 @@ const TelaInicial = () => {
                     />
                 </View>
 
-                <View style={styles.indicacao}>
-                    <CardIndicações />
-                </View>
+                {!pesquisa && (
+                    <View style={styles.indicacao}>
+                        <CardIndicações />
+                    </View>
+                )}
 
                 <View style={styles.Secao2}>
                     <View style={styles.TituloSecao}>
-                        <Text style={styles.SecaoTitle}>Para suas manhãs</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("TodosOsLivros")}>
-                            <Text style={styles.SecaoTitleItalic}>Ver Todos </Text>
-                        </TouchableOpacity>
+                        <Text style={styles.SecaoTitle}>
+                            {pesquisa ? "Resultados da busca" : "Para suas manhãs"}
+                        </Text>
+                        {!pesquisa && (
+                            <TouchableOpacity onPress={() => navigation.navigate("TodosOsLivros")}>
+                                <Text style={styles.SecaoTitleItalic}>Ver Todos </Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
                     <View style={styles.Separacao}></View>
 
                     <View style={styles.containerLivros}>
-                       
-                        <FlatList
-                            data={LivrosData}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 10 }}
+                        {livrosFiltrados.length === 0 ? (
+                            <View style={{ paddingHorizontal: 24, paddingVertical: 20, alignItems: "center" }}>
+                                <EvilIcons name="search" size={48} color={Colors.colors.azulClaro} />
+                                <Text style={{ fontFamily: "Inter_400Regular", color: Colors.colors.azulMedio, marginTop: 10 }}>
+                                    Nenhum livro encontrado com "{pesquisa}".
+                                </Text>
+                            </View>
+                        ) : (
+                            <FlatList
+                                data={livrosFiltrados}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 10 }}
                             renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={styles.itemContainer}
-                            activeOpacity={0.85}
-                            onPress={() =>
-                                navigation.navigate("ResenhaLiteraria", { item })
-                            }
-                        >
-                            <CardLivros item={item} />
-                        </TouchableOpacity>
-                    )}
-                    keyExtractor={(item) => item.id.toString()}
+                                <TouchableOpacity
+                                    style={styles.itemContainer}
+                                    activeOpacity={0.85}
+                                    onPress={() =>
+                                        navigation.navigate("ResenhaLiteraria", { item })
+                                    }
+                                >
+                                    <CardLivros item={item} />
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item) => item.id.toString()}
                         />
+                        )}
                     </View>
                 </View>
 
