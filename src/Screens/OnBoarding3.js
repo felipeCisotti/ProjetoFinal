@@ -1,4 +1,4 @@
-// OnBoarding3.js
+
 
 import React, { useState } from 'react';
 import {
@@ -14,6 +14,7 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colors from "../Colors.json";
+import Card from "../../assets/OnBoarding/CardOnBoarding.jpg"
 
 export default function OnBoarding3({ navigation }) {
   const [nome, setNome] = useState('');
@@ -55,24 +56,15 @@ export default function OnBoarding3({ navigation }) {
             </View>
 
       {/* TITULO */}
-      <View style={styles.titleArea}>
-        <Text style={styles.title}>
-            Como devemos
-        </Text>
-
-        <Text style={styles.subtitle}>
-            chamar você?
-        </Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Como devemos</Text>
+        <Text style={[styles.title, styles.titleItalic]}>chamar você?</Text>
       </View>
 
       {/* IMAGEM */}
-      <Image
-        source={{
-          uri: 'https://cdn-icons-png.flaticon.com/512/3145/3145765.png',
-        }}
-        style={styles.image}
-        resizeMode="contain"
-      />
+      <View style={styles.imageContainer}>
+        <Image source={Card} style={styles.image} />
+      </View>
 
       {/* INPUT */}
       <View style={styles.inputArea}>
@@ -129,31 +121,37 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     letterSpacing: 1.5,
   },
-  titleArea: {
-    paddingHorizontal: 20,
-    marginTop: 30,
-  },
-  title: {
-    fontSize: 38,
-    color: Colors.colors.azulEscuro,
-    fontFamily: 'serif',
-  },
-  subtitle: {
-    fontSize: 38,
-    color: Colors.colors.azulMedio,
-    fontStyle: 'italic',
-    fontFamily: 'serif',
-    marginTop: -5,
-  },
-  image: {
-    width: 160,
-    height: 160,
-    alignSelf: 'center',
-    marginTop: 40,
-  },
+  titleContainer: {
+        paddingHorizontal: 20,
+        paddingTop: 30,
+        paddingBottom: 15,
+    },
+    title: {
+        fontSize: 28,
+        color: Colors.colors.azulEscuro,
+        fontWeight: "700",
+        lineHeight: 34,
+    },
+    titleItalic: {
+        fontStyle: "italic",
+        fontWeight: "400",
+        color: Colors.colors.azulMedio,
+    },
+     imageContainer: {
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingBottom: 15,
+        paddingTop: 5,
+    },
+    image: {
+        width: 380,
+        height: 240,
+        borderRadius: 16,
+        resizeMode: "cover",
+    },
   inputArea: {
     paddingHorizontal: 20,
-    marginTop: 40,
+    marginTop: 10,
   },
   label: {
     fontSize: 11,
@@ -181,7 +179,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 60,
     left: 0,
     right: 0,
     paddingHorizontal: 30,

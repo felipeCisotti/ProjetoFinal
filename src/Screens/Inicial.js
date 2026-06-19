@@ -14,7 +14,7 @@ export default function Inicial({ navigation }) {
         async function checarOnboarding() {
             try {
                 const usuario = await AsyncStorage.getItem("@usuario");
-                
+
                 if (active) {
                     if (usuario !== null) {
                         navigation.replace("TelaInicial");
@@ -32,7 +32,7 @@ export default function Inicial({ navigation }) {
 
         const timer = setTimeout(() => {
             checarOnboarding();
-        }, 2000); // 2 segundos de exibição do logo para uma transição mais fluida e premium
+        }, 2000);
 
         return () => {
             active = false;

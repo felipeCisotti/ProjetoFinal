@@ -75,7 +75,7 @@ const TelaPerfil = () => {
         if (!result.canceled) {
             const uri = result.assets[0].uri;
             setFotoPerfil(uri);
-            // Persiste a foto junto com os dados do usuário
+
             try {
                 const json = await AsyncStorage.getItem("@usuario");
                 const obj = json ? JSON.parse(json) : {};

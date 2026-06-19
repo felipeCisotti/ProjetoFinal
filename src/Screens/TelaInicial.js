@@ -175,8 +175,8 @@ const TelaInicial = () => {
                             Experimente nosso Timer Pomodoro para melhorar sua concentração e ler mais.
                         </Text>
                     </View>
-                    <TouchableOpacity 
-                        style={styles.pomodoroButton} 
+                    <TouchableOpacity
+                        style={styles.pomodoroButton}
                         activeOpacity={0.8}
                         onPress={() => navigation.navigate("PomodoroTimer")}
                     >

@@ -5,6 +5,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { useFavoritos } from "../FavoritosContext";
 import * as Sharing from "expo-sharing";
 import { Asset } from "expo-asset";
+import * as FileSystem from "expo-file-system/legacy";
 
 const CardLivros = ({ item, isGrid }) => {
     const { isFavorito, toggleFavorito } = useFavoritos();
@@ -13,19 +14,33 @@ const CardLivros = ({ item, isGrid }) => {
     const compartilharLivro = async () => {
         try {
             const mensagem = `Ei, veja este livro que encontrei no EntreLinhas: ${item.Titulo}, escrito por ${item.Autor}!`;
-            
+
             const isAvailable = await Sharing.isAvailableAsync();
-            
+
             if (isAvailable) {
                 const [asset] = await Asset.loadAsync(item.Imagem);
-                
-                await Sharing.shareAsync(asset.localUri, {
-                    dialogTitle: mensagem,
-                    mimeType: 'image/jpeg',
-                    UTI: 'public.jpeg',
-                });
+
+                if (asset && asset.localUri) {
+                    const filename = `${asset.name}.${asset.type || "jpg"}`;
+                    const cacheUri = `${FileSystem.cacheDirectory}${filename}`;
+
+                    await FileSystem.copyAsync({
+                        from: asset.localUri,
+                        to: cacheUri,
+                    });
+
+                    await Sharing.shareAsync(cacheUri, {
+                        dialogTitle: mensagem,
+                        mimeType: "image/jpeg",
+                        UTI: "public.jpeg",
+                    });
+                } else {
+                    await Share.share({
+                        message: mensagem,
+                        title: `Compartilhar ${item.Titulo}`,
+                    });
+                }
             } else {
-                // Caso não suporte (ex: Web), volta ao compartilhamento só de texto
                 await Share.share({
                     message: mensagem,
                     title: `Compartilhar ${item.Titulo}`,

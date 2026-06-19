@@ -158,15 +158,15 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         color: Colors.colors.azulMedio,
     },
-    imageContainer: {
+   imageContainer: {
         alignItems: "center",
         paddingHorizontal: 20,
         paddingBottom: 15,
         paddingTop: 5,
     },
     image: {
-        width: width - 40,
-        height: 180,
+        width: 380,
+        height: 230,
         borderRadius: 16,
         resizeMode: "cover",
     },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         paddingHorizontal: 30,
-        paddingBottom: 20,
+        paddingBottom: 30,
         paddingTop: 5,
     },
     continueButton: {

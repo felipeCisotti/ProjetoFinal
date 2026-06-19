@@ -20,16 +20,16 @@ const MODES = [
 
 
 export default function PomodoroTimer({ navigation }) {
-    const [modeIndex, setModeIndex] = useState(1); // começa em "leitura"
+    const [modeIndex, setModeIndex] = useState(1);
     const [totalSeconds, setTotalSeconds] = useState(25 * 60);
     const [secondsLeft, setSecondsLeft] = useState(25 * 60);
     const [isRunning, setIsRunning] = useState(false);
     const [rounds, setRounds] = useState(0);
-    const [totalTime, setTotalTime] = useState(0); // tempo total em segundos
+    const [totalTime, setTotalTime] = useState(0);
     const intervalRef = useRef(null);
     const pulseAnim = useRef(new Animated.Value(1)).current;
 
-    // Animação de pulso enquanto roda
+
     useEffect(() => {
         if (isRunning) {
             const pulse = Animated.loop(
@@ -53,7 +53,7 @@ export default function PomodoroTimer({ navigation }) {
         }
     }, [isRunning]);
 
-    // Timer principal
+
     useEffect(() => {
         if (isRunning && secondsLeft > 0) {
             intervalRef.current = setInterval(() => {
@@ -61,7 +61,7 @@ export default function PomodoroTimer({ navigation }) {
                 setTotalTime((prev) => prev + 1);
             }, 1000);
         } else if (secondsLeft === 0 && isRunning) {
-            // Timer finalizado
+
             setIsRunning(false);
             setRounds((prev) => prev + 1);
             Vibration.vibrate(500);
@@ -95,7 +95,7 @@ export default function PomodoroTimer({ navigation }) {
 
     const handleStart = () => {
         if (secondsLeft === 0) {
-            // Reiniciar se o timer terminou
+
             setSecondsLeft(totalSeconds);
         }
         setIsRunning(true);
@@ -241,7 +241,7 @@ export default function PomodoroTimer({ navigation }) {
                 </View>
             </View>
 
-            
+
         </SafeAreaView>
     );
 }

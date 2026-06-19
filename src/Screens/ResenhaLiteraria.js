@@ -247,7 +247,7 @@ const ResenhaLiteraria = () => {
                     {todasAvaliacoes.length === 0 ? (
                         <View style={styles.semAvaliacoes}>
                             <EvilIcons name="star" size={42} color={Colors.colors.azulClaro} />
-                            
+
                             <Text style={styles.semAvaliacoesTexto}>
                                 Seja o primeiro a avaliar este livro!{"\n"}
                                 Toque no lápis abaixo para escrever sua resenha.
@@ -255,9 +255,9 @@ const ResenhaLiteraria = () => {
                         </View>
                     ) : (
                         todasAvaliacoes.map((av) => (
-                            <CardAvaliacao 
-                                key={av.id} 
-                                avaliacao={av} 
+                            <CardAvaliacao
+                                key={av.id}
+                                avaliacao={av}
                                 currentUser={nomeUsuario}
                                 onDelete={av.id.startsWith("fixo") ? null : excluirAvaliacao}
                             />

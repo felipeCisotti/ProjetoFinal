@@ -6,7 +6,7 @@ const FavoritosContext = createContext();
 export const FavoritosProvider = ({ children }) => {
     const [favoritos, setFavoritos] = useState([]);
 
-    // Carrega favoritos salvos ao iniciar
+
     useEffect(() => {
         async function carregar() {
             try {
@@ -19,7 +19,7 @@ export const FavoritosProvider = ({ children }) => {
         carregar();
     }, []);
 
-    // Salva favoritos sempre que mudam
+
     useEffect(() => {
         AsyncStorage.setItem("@favoritos", JSON.stringify(favoritos)).catch(
             (e) => console.log("Erro ao salvar favoritos:", e)

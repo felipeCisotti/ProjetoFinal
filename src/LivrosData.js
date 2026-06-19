@@ -12,7 +12,7 @@ const LivrosData = [
     Imagem: Conselhos,
     Descricao:
       "Obra educativa em que Nísia Floresta apresenta reflexões sobre moral, educação, comportamento e o papel da mulher na sociedade do século XIX.",
-    Resenha: 
+    Resenha:
       ""
   },
   {
